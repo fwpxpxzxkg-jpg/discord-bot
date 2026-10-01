@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { ChannelSchema } from '@/common/schemas/Channel.js';
 import { RoleSchema } from '@/common/schemas/Role.js';
 import { TicketSchema } from '@/modules/ticket/schemas/Ticket.js';
+import { LocaleSchema } from '@/translations/locale.js';
 
 const ModelsSchema = z.object({
   embeddings: z.string().optional(),
@@ -23,6 +24,7 @@ export const RequiredBotConfigSchema = z.object({
       enabled: z.boolean().optional(),
     })
     .optional(),
+  language: LocaleSchema.optional(),
   models: ModelsSchema.optional(),
   roles: z.record(RoleSchema, z.string()).optional(),
   ticketing: z

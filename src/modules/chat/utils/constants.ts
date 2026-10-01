@@ -6,14 +6,18 @@ import {
   commandErrors,
 } from '@/translations/commands.js';
 
-export const LLM_ERRORS: Record<string, string> = {
-  credential_required: commandErrors.credentialRequired,
-  free_tier_unavailable: commandErrors.freeTierUnavailable,
-  LLM_DISABLED: commandErrors.llmDisabled,
-  LLM_NOT_READY: commandErrors.llmNotReady,
-  LLM_UNAVAILABLE: commandErrors.llmUnavailable,
-  sponsored_request_in_progress: commandErrors.sponsoredRequestInProgress,
-} as const;
+export const getLlmError = (code: string): string | undefined => {
+  const errors: Record<string, string> = {
+    credential_required: commandErrors.credentialRequired,
+    free_tier_unavailable: commandErrors.freeTierUnavailable,
+    LLM_DISABLED: commandErrors.llmDisabled,
+    LLM_NOT_READY: commandErrors.llmNotReady,
+    LLM_UNAVAILABLE: commandErrors.llmUnavailable,
+    sponsored_request_in_progress: commandErrors.sponsoredRequestInProgress,
+  };
+
+  return errors[code];
+};
 
 export const PRIVATE_STREAM_ERROR_CODES: ReadonlySet<string> = new Set([
   'credential_required',
@@ -34,7 +38,7 @@ export const localizeStreamEvent = (event: StreamEvent): StreamEvent => {
       const message =
         event.code === 'free_quota_exhausted'
           ? commandErrorFunctions.freeQuotaExhausted(event.resets_at)
-          : (LLM_ERRORS[event.code] ?? commandErrors.unknownChatError);
+          : (getLlmError(event.code) ?? commandErrors.unknownChatError);
 
       return { ...event, message };
     }

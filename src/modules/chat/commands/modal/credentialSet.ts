@@ -1,4 +1,4 @@
-/* eslint-disable camelcase, sonarjs/no-nested-template-literals, sonarjs/no-nested-conditional -- API payload uses snake_case; nested ternary is readable here */
+/* eslint-disable camelcase, sonarjs/no-nested-conditional -- API payload uses snake_case; nested ternary is readable here */
 import { MessageFlags, type ModalSubmitInteraction } from 'discord.js';
 import { ZodError } from 'zod';
 
@@ -15,11 +15,12 @@ import {
   invalidateModelCatalog,
   upsertCredential,
 } from '@/modules/chat/utils/requests.js';
-import { commandErrors } from '@/translations/commands.js';
+import {
+  commandErrors,
+  commandResponseFunctions,
+} from '@/translations/commands.js';
 
 export const name = 'credentialSet';
-const INVALID_CREDENTIAL_MESSAGE =
-  'Внесениот API клуч или base URL не е валиден.';
 
 const parseProvider = (args: string[]): CredentialProvider => {
   const provider = args[0];
@@ -50,11 +51,11 @@ export const execute = async (
     invalidateModelCatalog(chatUser.id);
 
     await interaction.editReply(
-      `Зачуван е API клучот за ${provider}${result.base_url ? ` (${result.base_url})` : ''}.`,
+      commandResponseFunctions.credentialSaved(provider, result.base_url),
     );
   } catch (error) {
     if (error instanceof ZodError) {
-      await interaction.editReply(INVALID_CREDENTIAL_MESSAGE);
+      await interaction.editReply(commandErrors.invalidCredential);
       return;
     }
 
@@ -67,7 +68,7 @@ export const execute = async (
         error.status === 401
           ? commandErrors.unknownChatError
           : error.status === 422
-            ? INVALID_CREDENTIAL_MESSAGE
+            ? commandErrors.invalidCredential
             : commandErrors.unknownChatError;
 
       await interaction.editReply(message);

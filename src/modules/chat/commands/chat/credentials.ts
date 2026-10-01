@@ -23,7 +23,11 @@ import {
   invalidateModelCatalog,
   listCredentials,
 } from '@/modules/chat/utils/requests.js';
-import { commandDescriptions, commandErrors } from '@/translations/commands.js';
+import {
+  commandDescriptions,
+  commandErrors,
+  commandResponseFunctions,
+} from '@/translations/commands.js';
 import { labels } from '@/translations/labels.js';
 
 const PROVIDER_OPTION_NAME = 'provider';
@@ -86,7 +90,7 @@ const handleCredentialsDelete = async (
     invalidateModelCatalog(chatUser.id);
     await safeReplyToInteraction(
       interaction,
-      `Избришана е API клучот за ${inlineCode(parsedProvider)}.`,
+      commandResponseFunctions.credentialDeleted(parsedProvider),
       { ephemeral: true },
     );
   } catch (error) {
@@ -113,10 +117,10 @@ const handleCredentialsSet = async (
 
   const modal = new ModalBuilder()
     .setCustomId(`credentialSet:${parsedProvider}`)
-    .setTitle(`Постави API клуч за ${parsedProvider}`)
+    .setTitle(commandResponseFunctions.credentialModalTitle(parsedProvider))
     .addLabelComponents(
       new LabelBuilder()
-        .setLabel('API клуч')
+        .setLabel(labels.apiKey)
         .setTextInputComponent(
           new TextInputBuilder()
             .setCustomId('api-key')

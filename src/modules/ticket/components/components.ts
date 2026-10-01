@@ -9,16 +9,17 @@ import { getPaginationComponent } from '@/common/components/pagination.js';
 import { TICKETS_PER_PAGE } from '@/modules/ticket/utils/constants.js';
 import { componentMessages } from '@/translations/components.js';
 import { emojis } from '@/translations/emojis.js';
-import { labels } from '@/translations/labels.js';
+import { getDateLocale, labels } from '@/translations/labels.js';
 
 import { type Ticket } from '../schemas/Ticket.js';
 
 const TICKET_LIST_BUTTON_ID = 'ticketList';
 
-const dateFormatter = new Intl.DateTimeFormat('mk-MK', {
-  dateStyle: 'long',
-  timeStyle: 'short',
-});
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat(getDateLocale(), {
+    dateStyle: 'long',
+    timeStyle: 'short',
+  }).format(date);
 
 const buildTicketCreateButtons = (
   ticketTypes: Ticket[],
@@ -81,7 +82,7 @@ export const getTicketListComponent = (
     description: componentMessages.allTickets,
     entries: ticketThreads.map(
       (thread) =>
-        `${thread.url} (${thread.createdAt === null ? labels.none : dateFormatter.format(thread.createdAt)})`,
+        `${thread.url} (${thread.createdAt === null ? labels.none : formatDate(thread.createdAt)})`,
     ),
     entriesLabel: labels.tickets,
     page,

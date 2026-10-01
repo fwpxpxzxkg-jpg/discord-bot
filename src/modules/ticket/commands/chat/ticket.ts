@@ -27,6 +27,7 @@ import {
   commandErrors,
   commandResponses,
 } from '@/translations/commands.js';
+import { labels } from '@/translations/labels.js';
 import { ticketMessageFunctions } from '@/translations/tickets.js';
 
 export const name = 'ticket';
@@ -141,7 +142,7 @@ const handleTicketSend = async (interaction: ChatInputCommandInteraction) => {
     .join('\n');
 
   const embed = new EmbedBuilder()
-    .setTitle('Тикети')
+    .setTitle(labels.tickets)
     .setDescription(ticketMessageFunctions.ticketSendMessage(ticketList))
     .setTimestamp();
 

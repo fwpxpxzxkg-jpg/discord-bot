@@ -14,6 +14,7 @@ import {
   type ModalCommand,
 } from '../lib/Command.js';
 import { getModules } from '../utils/modules.js';
+import { localizeCommand } from './localization.js';
 
 const chatCommands = new Collection<string, ChatCommand>();
 const buttonCommands = new Collection<string, ButtonCommand>();
@@ -284,7 +285,7 @@ export const registerCommands = async () => {
   const commandsToRegister = [];
 
   for (const [, command] of chatCommands) {
-    commandsToRegister.push(command.data.toJSON());
+    commandsToRegister.push(localizeCommand(command.data.toJSON()));
   }
 
   for (const [, command] of contextCommands) {

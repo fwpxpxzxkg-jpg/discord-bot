@@ -14,7 +14,7 @@ import { commandErrors } from '@/translations/commands.js';
 import { SendPromptOptionsSchema } from '../schemas/Chat.js';
 import { ChatApiError } from '../schemas/Credentials.js';
 import {
-  LLM_ERRORS,
+  getLlmError,
   localizeStreamEvent,
   PRIVATE_STREAM_ERROR_CODES,
 } from './constants.js';
@@ -102,7 +102,7 @@ const handleConversationError = async (
   const errorMessage =
     error instanceof ChatApiError
       ? commandErrors.llmUnavailable
-      : (LLM_ERRORS[error.message] ?? commandErrors.unknownChatError);
+      : (getLlmError(error.message) ?? commandErrors.unknownChatError);
 
   try {
     await message.reply({

@@ -1,45 +1,14 @@
-export const labels = {
-  accreditation: 'Акредитација',
-  assistants: 'Асистенти',
-  cabinet: 'Кабинет',
-  capacity: 'Капацитет',
-  close: 'Затвори',
-  code: 'Код',
-  commands: 'Команди',
-  consultations: 'Консултации',
-  courses: 'Предмети',
-  description: 'Опис',
-  email: 'Електронска пошта',
-  enrolledStudents: 'Запишани студенти',
-  firstToken: 'прв токен',
-  floor: 'Кат',
-  free: 'Бесплатно',
-  level: 'Ниво',
-  link: 'Линк',
-  links: 'Линкови',
-  location: 'Локација',
-  mrbs: 'MRBS',
-  name: 'Име',
-  none: 'Нема',
-  notAvailable: 'Недостапен',
-  note: 'НАПОМЕНА',
-  position: 'Позиција',
-  prerequisite: 'Предуслов',
-  professors: 'Професори',
-  profile: 'Профил',
-  program: 'Смер',
-  questions: 'Прашања',
-  quotaRemaining: 'Преостанато',
-  retired: 'Пензиониран',
-  retiredPlural: 'Пензионирани',
-  semester: 'Семестар',
-  staff: 'Кадар',
-  tickets: 'Тикети',
-  title: 'Звање',
-  type: 'Тип',
-  unknown: '?',
-};
+import { getLocale, localized } from './locale.js';
+import * as mk from './mk/labels.js';
+import * as tr from './tr/labels.js';
 
-export const toolStatusLabels = new Map<string, string>([
-  ['recommend_thesis_committee', '👥 Составувам комисија…'],
-]);
+export const labels = localized({ mk: mk.labels, tr: tr.labels });
+
+export const toolStatusLabels = localized({
+  mk: mk.toolStatusLabels,
+  tr: tr.toolStatusLabels,
+});
+
+const dateLocales = { mk: mk.dateLocale, tr: tr.dateLocale };
+
+export const getDateLocale = () => dateLocales[getLocale()];

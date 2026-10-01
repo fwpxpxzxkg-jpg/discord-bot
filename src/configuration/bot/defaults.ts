@@ -2,6 +2,7 @@ import {
   type BotConfig,
   type BotConfigKeys,
 } from '@/modules/admin/schemas/BotConfig.js';
+import { DEFAULT_LOCALE } from '@/translations/locale.js';
 
 export const DEFAULT_CONFIGURATION = {
   channels: undefined,
@@ -13,6 +14,7 @@ export const DEFAULT_CONFIGURATION = {
   feedback: {
     enabled: true,
   },
+  language: DEFAULT_LOCALE,
   models: {
     embeddings: 'BAAI/bge-m3',
     inference: 'claude-sonnet-5',

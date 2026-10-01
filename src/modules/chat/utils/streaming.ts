@@ -21,7 +21,7 @@ import { commandErrors } from '@/translations/commands.js';
 import type { SendPromptOptions } from '../schemas/Chat.js';
 
 import {
-  LLM_ERRORS,
+  getLlmError,
   localizeStreamEvent,
   PRIVATE_STREAM_ERROR_CODES,
 } from './constants.js';
@@ -195,7 +195,7 @@ export const handlePromptWithStreaming = async (
     }
 
     const errorMessage =
-      LLM_ERRORS[error.message] ?? commandErrors.unknownChatError;
+      getLlmError(error.message) ?? commandErrors.unknownChatError;
 
     await replyStreamError(
       interaction,

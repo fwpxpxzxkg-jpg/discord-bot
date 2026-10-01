@@ -1,6 +1,8 @@
-import { type ClientEvents, Events } from 'discord.js';
+import { type ClientEvents, Events, type Interaction } from 'discord.js';
 
 import { logger } from '@/common/logger/index.js';
+import { getGuildLocale } from '@/configuration/bot/index.js';
+import { runWithLocale } from '@/translations/locale.js';
 
 import { handleAutocomplete } from '../commands/autocompleteHandler.js';
 import {
@@ -15,7 +17,7 @@ import { handleChatInputCommand } from '../commands/handlers.js';
 
 export const name = Events.InteractionCreate;
 
-export const execute = async (...[interaction]: ClientEvents[typeof name]) => {
+const handleInteraction = async (interaction: Interaction) => {
   if (interaction.isChatInputCommand()) {
     await handleChatInputCommand(interaction);
   } else if (interaction.isButton()) {
@@ -33,4 +35,10 @@ export const execute = async (...[interaction]: ClientEvents[typeof name]) => {
       guildId: interaction.guild?.id,
     });
   }
+};
+
+export const execute = async (...[interaction]: ClientEvents[typeof name]) => {
+  const locale = await getGuildLocale(interaction.guildId);
+
+  await runWithLocale(locale, () => handleInteraction(interaction));
 };

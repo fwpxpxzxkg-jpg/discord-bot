@@ -1,9 +1,13 @@
 import { type ClientEvents, Events, type Message } from 'discord.js';
 
 import { logger } from '@/common/logger/index.js';
-import { getCrosspostingProperty } from '@/configuration/bot/index.js';
+import {
+  getCrosspostingProperty,
+  getGuildLocale,
+} from '@/configuration/bot/index.js';
 import { handleChatMessage } from '@/modules/chat/utils/reply.js';
 import { handleTicketMessage } from '@/modules/ticket/utils/tickets.js';
+import { runWithLocale } from '@/translations/locale.js';
 
 export const name = Events.MessageCreate;
 
@@ -42,9 +46,13 @@ const crosspost = async (message: Message) => {
 };
 
 export const execute = async (...[message]: ClientEvents[typeof name]) => {
-  await Promise.all([
-    crosspost(message),
-    handleChatMessage(message),
-    handleTicketMessage(message),
-  ]);
+  const locale = await getGuildLocale(message.guildId);
+
+  await runWithLocale(locale, () =>
+    Promise.all([
+      crosspost(message),
+      handleChatMessage(message),
+      handleTicketMessage(message),
+    ]),
+  );
 };

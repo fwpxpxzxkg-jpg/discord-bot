@@ -17,9 +17,11 @@ import { Channel } from '@/common/schemas/Channel.js';
 import { getChannel } from '@/common/services/channels.js';
 import {
   getChannelsProperty,
+  getGuildLocale,
   getTicketingProperty,
 } from '@/configuration/bot/index.js';
 import { client } from '@/core/client.js';
+import { runWithLocale } from '@/translations/locale.js';
 import {
   ticketMessageFunctions,
   ticketMessages,
@@ -347,6 +349,8 @@ export const maintainTickets = async () => {
       continue;
     }
 
-    await maintainTicketThreads(ticketThreads, guild.id);
+    await runWithLocale(await getGuildLocale(guild.id), () =>
+      maintainTicketThreads(ticketThreads, guild.id),
+    );
   }
 };

@@ -88,6 +88,7 @@ The bot configuration is stored in `config/bot.json`. This file uses a multi-gui
     "crossposting": { ... },
     "errorWebhook": "https://...",
     "feedback": { ... },
+    "language": "mk",
     "models": { ... },
     "roles": { ... },
     "ticketing": { ... }
@@ -99,6 +100,12 @@ The bot configuration is stored in `config/bot.json`. This file uses a multi-gui
 When the bot joins a new guild, it automatically initializes a default configuration for that guild. You can use `/config get`, `/config set`, and `/config reload` to view, modify, and reload the configuration. The `/config data` subcommand manually reloads all data from the data storage. Runtime state is otherwise kept in Discord or memory; the bot does not require a database.
 
 See [`config/bot.json.example`](./config/bot.json.example) for an example configuration structure.
+
+### Language
+
+The `language` property selects the language of the bot responses in that guild. The available languages are `mk` (Macedonian, the default) and `tr` (Turkish). Change it with `/config set key:language value:"tr"`.
+
+Command and option descriptions are localized through Discord, so every user sees them in the language of their own Discord client when a translation exists, regardless of the guild language.
 
 ### Data Files
 

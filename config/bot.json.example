@@ -9,6 +9,7 @@
     "feedback": {
       "enabled": true
     },
+    "language": "mk",
     "models": {
       "embeddings": "BAAI/bge-m3",
       "inference": "claude-sonnet-5"

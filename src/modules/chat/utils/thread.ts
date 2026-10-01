@@ -81,7 +81,7 @@ export const handleChatThread = async (
     const thread = await channel.threads.create({
       autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
       invitable: false,
-      name: `Разговор — ${user.displayName}`,
+      name: commandResponseFunctions.chatThreadName(user.displayName),
       type: ChannelType.PrivateThread,
     });
 

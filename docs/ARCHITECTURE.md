@@ -363,6 +363,11 @@ The **translations** layer contains all user-facing strings, organized by featur
 | `labels.ts`     | General UI labels               |
 | `pagination.ts` | Pagination text                 |
 | `tickets.ts`    | Ticketing system messages       |
+| `locale.ts`     | Locale context and helpers      |
+
+The strings themselves live in one directory per language (`mk/`, `tr/`). The files listed above expose them through `localized()`, which reads from the table of the active locale. Event handlers run inside `runWithLocale()` with the `language` of the guild configuration, so call sites use the translations as plain objects and never pass a locale around. Translations read outside of a locale context (for example at import time) resolve to the default locale.
+
+To add a language, add it to `LocaleSchema`, copy `mk/` into a new directory, translate it and register it in the files above. Each table is checked against the Macedonian one with `satisfies`, so missing keys fail the type check.
 
 ### Usage
 

@@ -7,6 +7,7 @@ import {
   type MultiGuildConfig,
 } from '@/modules/admin/schemas/BotConfig.js';
 import { configErrorFunctions } from '@/translations/errors.js';
+import { DEFAULT_LOCALE, type Locale } from '@/translations/locale.js';
 
 import { DEFAULT_CONFIGURATION } from './defaults.js';
 import {
@@ -136,6 +137,17 @@ export const getFeedbackProperty = async <
 ) => {
   const config = await getGuildConfig(guildId);
   return config.feedback?.[key] ?? DEFAULT_CONFIGURATION.feedback[key];
+};
+
+export const getGuildLocale = async (
+  guildId: null | string | undefined,
+): Promise<Locale> => {
+  if (guildId === null || guildId === undefined) {
+    return DEFAULT_LOCALE;
+  }
+
+  const config = await getGuildConfig(guildId);
+  return config.language ?? DEFAULT_LOCALE;
 };
 
 export const getRolesProperty = async (

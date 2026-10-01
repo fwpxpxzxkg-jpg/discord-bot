@@ -1,12 +1,13 @@
-export const componentMessages = {
-  allCommands:
-    'Ова се сите достапни команди за вас. Командите може да ги повикате во овој сервер, или во приватна порака.',
-  allTickets: 'Ова се сите активни тикети.',
-};
+import { localized } from './locale.js';
+import * as mk from './mk/components.js';
+import * as tr from './tr/components.js';
 
-export const componentMessageFunctions = {
-  allLinks: (command: string) =>
-    `Ова се сите достапни линкови. Истите можете да ги добиете посебно со ${command}.`,
-  allQuestions: (command: string) =>
-    `Ова се сите достапни прашања. Користете ${command} за да ги добиете одговорите.`,
-};
+export const componentMessages = localized({
+  mk: mk.componentMessages,
+  tr: tr.componentMessages,
+});
+
+export const componentMessageFunctions = localized({
+  mk: mk.componentMessageFunctions,
+  tr: tr.componentMessageFunctions,
+});

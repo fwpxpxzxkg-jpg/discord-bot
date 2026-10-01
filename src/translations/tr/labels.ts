@@ -1,0 +1,50 @@
+import type * as mk from '../mk/labels.js';
+
+export const dateLocale = 'tr-TR';
+
+export const labels = {
+  accreditation: 'Akreditasyon',
+  apiKey: 'API anahtarı',
+  assistants: 'Asistanlar',
+  cabinet: 'Ofis',
+  capacity: 'Kapasite',
+  close: 'Kapat',
+  code: 'Kod',
+  commands: 'Komutlar',
+  consultations: 'Görüşme saatleri',
+  courses: 'Dersler',
+  description: 'Açıklama',
+  email: 'E-posta',
+  enrolledStudents: 'Kayıtlı öğrenciler',
+  firstToken: 'ilk token',
+  floor: 'Kat',
+  free: 'Ücretsiz',
+  level: 'Seviye',
+  link: 'Bağlantı',
+  links: 'Bağlantılar',
+  location: 'Konum',
+  mrbs: 'MRBS',
+  name: 'Ad',
+  none: 'Yok',
+  notAvailable: 'Kullanılamıyor',
+  note: 'NOT',
+  position: 'Görev',
+  prerequisite: 'Ön koşul',
+  professors: 'Öğretim üyeleri',
+  profile: 'Profil',
+  program: 'Bölüm',
+  questions: 'Sorular',
+  quotaRemaining: 'Kalan',
+  retired: 'Emekli',
+  retiredPlural: 'Emekliler',
+  semester: 'Dönem',
+  staff: 'Kadro',
+  tickets: 'Destek talepleri',
+  title: 'Unvan',
+  type: 'Tür',
+  unknown: '?',
+} satisfies typeof mk.labels;
+
+export const toolStatusLabels = new Map<string, string>([
+  ['recommend_thesis_committee', '👥 Jüri oluşturuyorum…'],
+]);
